@@ -21,6 +21,7 @@ services:
       - ./otel-collector:/etc/otel-collector/
     depends_on:
       - tempo
+      - prometheus
     networks:
       - observability_poc
 
@@ -41,5 +42,19 @@ services:
     command: --config.file=/etc/tempo/config.yml
     volumes:
       - ./tempo:/etc/tempo:ro
+    networks:
+      - observability_poc
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+      - "--web.enable-remote-write-receiver"
+    ports:
+      - "9090:9090"
     networks:
       - observability_poc

@@ -20,7 +20,9 @@ services:
     environment:
       OTEL_SERVICE_NAME: "comment-service"
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_TRACES_EXPORTER: "otlp"
       OTEL_LOGS_EXPORTER: "otlp"
+      OTEL_METRICS_EXPORTER: "none"
       OTEL_EXPERIMENTAL_EXPORTER_OTLP_RETRY_ENABLED: "true"
     ports:
       - "8002:8002"
@@ -39,7 +41,9 @@ services:
     environment:
       OTEL_SERVICE_NAME: "post-service"
       OTEL_EXPORTER_OTLP_ENDPOINT: "http://collector:4317"
+      OTEL_TRACES_EXPORTER: "otlp"
       OTEL_LOGS_EXPORTER: "otlp"
+      OTEL_METRICS_EXPORTER: "none"
       OTEL_EXPERIMENTAL_EXPORTER_OTLP_RETRY_ENABLED: "true"
       COMMENT_SERVICE_BASE_URL: "http://comment-service:8002"
     ports:
